@@ -1,9 +1,7 @@
 package dk.a2mate.palletizing.api.internal;
 
-import javax.validation.constraints.NotNull;
-
-import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import dk.a2mate.palletizing.api.model.Item;
 import dk.a2mate.palletizing.api.model.LayeredItem;
@@ -16,6 +14,7 @@ import dk.a2mate.palletizing.api.model.PalletizedPallet;
  */
 public class BlockStacking extends Stacking {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(BlockStacking.class);
 
 	public BlockStacking(Pallet pallet, Item item) {
 		super(pallet, item);
@@ -77,20 +76,16 @@ public class BlockStacking extends Stacking {
 	 * BLOCK stack all layers identical
 	 */
 	public PalletLayer[] generateStacking() {
-		System.out.println("BLOCK pattern");
+		LOGGER.debug("generateStacking()", pallet.getId());
 		boolean rotated = isRotatedBest();
-		System.out.println("rotated " + rotated);
+		LOGGER.debug("generateStacking() rotated {}", rotated);
 
 		PalletizedPallet pp = new PalletizedPallet();
 		pp.setNoOfItems(0);
 		pp.setWeight(0);
 		pp.setNoOfLayers(maxItemsInHeight());
 		//
-		System.out.println("z " + maxItemsInHeight());
-		System.out.println("x " + maxItemOnXAxis(rotated));
-		System.out.println("y " + maxItemOnYAxis(rotated));
-		System.out.println("x sp " + indentOnXAxis(rotated));
-		System.out.println("y sp " +  indentOnYAxis(rotated));
+		LOGGER.debug("generateStacking() maxItemsInHeight() {}", maxItemsInHeight());
 		
 		LayeredItem[][] lis = new LayeredItem[maxItemOnXAxis(rotated)][maxItemOnYAxis(rotated)];
 		for (int x = 0; x < maxItemOnXAxis(rotated); x++) {
@@ -103,7 +98,6 @@ public class BlockStacking extends Stacking {
 			}
 		}
 		PalletLayer[] layers = new PalletLayer[maxItemsInHeight()];
-		System.out.println("maxItemsInHeight " + maxItemsInHeight());
 		for (int z = 0; z < maxItemsInHeight(); z++) {
 			PalletLayer layer = new PalletLayer();
 			layer.setzCoordinate(pallet.getHeight() + (z * item.getHeight()));

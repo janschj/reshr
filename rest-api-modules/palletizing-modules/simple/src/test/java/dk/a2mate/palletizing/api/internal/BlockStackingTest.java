@@ -65,7 +65,18 @@ public class BlockStackingTest {
 		PalletLayer[] layer = stacking.generateStacking();
         assertEquals(2,layer.length);  
 	}
-
+	
+	@Test
+	@DisplayName("Best solution is rotated")
+	void testHightWithTwoItemxx() {
+		item.setHeight(740);
+		item.setLength(800);
+		item.setWeight(10);
+		item.setWidth(500);
+		PalletLayer[] layer = stacking.generateStacking();
+        assertTrue(layer[0].getLayeredItems()[0][0].isRotated());  
+	}
+	
 	@Test
 	@DisplayName("Null in item parameter is not valid")
 	void testPalletForNull() {
