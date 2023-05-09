@@ -14,7 +14,13 @@ import dk.a2mate.palletizing.api.sevice.ItemDataService;
 public class ItemDataServiceImpl implements ItemDataService {
 	
 	static HashMap<String, Item> itemStore = new HashMap<String, Item>();
-	
+
+	public ItemDataServiceImpl() {
+		if (itemStore.isEmpty()) {
+			itemStore.putIfAbsent("EPX", getEPX());
+			itemStore.putIfAbsent("EPX2", getEPX2());
+		}
+	}
 	@Override
 	public void createItem(Item item) {
 		itemStore.putIfAbsent(item.getId(), item);
@@ -29,12 +35,6 @@ public class ItemDataServiceImpl implements ItemDataService {
 
 	@Override
 	public Set<Item> findAll() {
-		
-		if (itemStore.isEmpty()) {
-			itemStore.putIfAbsent("EPX", getEPX());
-			itemStore.putIfAbsent("EPX2", getEPX2());
-		}
-		
 		 Set<Item> items = new TreeSet<>(new Comparator<Item>() {
 		        @Override
 		        public int compare(Item o1, Item o2) {

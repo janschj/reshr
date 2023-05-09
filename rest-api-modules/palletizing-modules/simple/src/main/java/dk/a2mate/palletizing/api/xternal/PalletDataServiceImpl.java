@@ -15,18 +15,20 @@ public class PalletDataServiceImpl implements PalletDataService {
 
 	static HashMap<String, Pallet> palletStore = new HashMap<String, Pallet>();
 
+	public PalletDataServiceImpl() {
+		if(palletStore.isEmpty()) {
+			palletStore.putIfAbsent("EUR", getEUR());
+			palletStore.putIfAbsent("EUR2", getEUR2());
+		}
+	}
 	
-	@Override
+ 	@Override
 	public Pallet findById(String id) {
 		return palletStore.get(id);
 	}
 
 	@Override
 	public Set<Pallet> findAll() {
-		if(palletStore.isEmpty()) {
-			palletStore.putIfAbsent("EUR", getEUR());
-			palletStore.putIfAbsent("EUR2", getEUR2());
-		}
 
 		Set<Pallet> pallets = new TreeSet<>(new Comparator<Pallet>() {
 			@Override

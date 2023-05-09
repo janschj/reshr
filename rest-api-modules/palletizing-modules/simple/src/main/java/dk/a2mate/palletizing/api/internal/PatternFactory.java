@@ -14,6 +14,14 @@ public class PatternFactory {
 			case BLOCK:
 				return new BlockStacking(pallet, item);
 			case ROW:
+				return new RowStacking(pallet, item);
+			case BRICK:
+				return new BlockStacking(pallet, item);
+			case PINWHEEL:
+				return new BlockStacking(pallet, item);
+			case SPLITROW:
+				return new SplitRowStacking(pallet, item);
+			case HYBRIDPINWHEEL:
 				return new BlockStacking(pallet, item);
 			default:
 				return new BlockStacking(pallet, item);

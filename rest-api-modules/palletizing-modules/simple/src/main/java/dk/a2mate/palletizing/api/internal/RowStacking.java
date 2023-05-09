@@ -12,11 +12,11 @@ import dk.a2mate.palletizing.api.model.PalletizedPallet;
 /*
  * Block stacking is identical rows on all layers
  */
-public class BlockStacking extends Stacking {
+public class RowStacking extends Stacking {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BlockStacking.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RowStacking.class);
 
-	public BlockStacking(Pallet pallet, Item item) {
+	public RowStacking(Pallet pallet, Item item) {
 		super(pallet, item);
 	}
 
@@ -73,12 +73,10 @@ public class BlockStacking extends Stacking {
 	}
 
 	/*
-	 * BLOCK stack all layers identical
+	 * ROW stack rotate layer after each layer
 	 */
 	public PalletLayer[] generateStacking() {
 		LOGGER.debug("generateStacking()", pallet.getId());
-		boolean rotated = isRotatedBest();
-		LOGGER.debug("generateStacking() rotated {}", rotated);
 
 		PalletizedPallet pp = new PalletizedPallet();
 		pp.setNoOfItems(0);
@@ -87,18 +85,19 @@ public class BlockStacking extends Stacking {
 		//
 		LOGGER.debug("generateStacking() maxItemsInHeight() {}", maxItemsInHeight());
 		
-		LayeredItem[][] lis = getLayeredItems(rotated);
 		PalletLayer[] layers = new PalletLayer[maxItemsInHeight()];
 		for (int z = 0; z < maxItemsInHeight(); z++) {
+			boolean rotated = (z % 2) == 1 ? true : false;
 			PalletLayer layer = new PalletLayer();
 			layer.setzCoordinate(pallet.getHeight() + (z * item.getHeight()));
-			layer.setLayeredItems(lis);
+			layer.setLayeredItems(getLayeredItems(rotated));
 			layer.setWeight(item.getWeight() * maxItemOnXAxis(rotated) * indentOnYAxis(rotated));
 			layer.setNoOfItems( maxItemOnXAxis(rotated) * indentOnYAxis(rotated));
 			layers[z] = layer;
 		}
 		return layers;
 	}
+	
 	private LayeredItem[][] getLayeredItems(boolean rotated) {
 		LayeredItem[][] lis = new LayeredItem[maxItemOnXAxis(rotated)][maxItemOnYAxis(rotated)];
 		for (int x = 0; x < maxItemOnXAxis(rotated); x++) {
