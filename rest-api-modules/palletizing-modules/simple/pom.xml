@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>simple</artifactId>
 
@@ -28,8 +30,21 @@
 			<artifactId>logback-classic</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 		</dependency>
 		<!-- openapi -->
 		<dependency>
@@ -62,6 +77,14 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			 <groupId>org.hibernate</groupId>
+			 <artifactId>hibernate-core</artifactId>
+		</dependency>		
+		<dependency> 
+			<groupId>org.hibernate</groupId> 
+			<artifactId>hibernate-entitymanager</artifactId> 
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -77,14 +100,14 @@
 						</goals>
 						<configuration>
 							<inputSpec>
-                                ${project.basedir}/src/main/resources/openapi.yaml
-                            </inputSpec>
+								${project.basedir}/src/main/resources/openapi.yaml
+							</inputSpec>
 							<generatorName>spring</generatorName>
 							<apiPackage>dk.a2mate.palletizing.api</apiPackage>
 							<modelPackage>dk.a2mate.palletizing.api.model</modelPackage>
 							<supportingFilesToGenerate>
-                                ApiUtil.java
-                            </supportingFilesToGenerate>
+								ApiUtil.java
+							</supportingFilesToGenerate>
 							<configOptions>
 								<delegatePattern>true</delegatePattern>
 								<useTags>true</useTags>
@@ -93,32 +116,16 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<id>tomcat-run</id>
-						<goals>
-							<goal>exec-war-only</goal>
-						</goals>
-						<phase>package</phase>
-						<configuration>
-							<path>/</path>
-							<enableNaming>true</enableNaming>
-							<finalName>webapp.jar</finalName>
-							<charset>utf-8</charset>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
+			<!-- <plugin> <groupId>org.apache.tomcat.maven</groupId> <artifactId>tomcat7-maven-plugin</artifactId> 
+				<version>2.2</version> <executions> <execution> <id>tomcat-run</id> <goals> 
+				<goal>exec-war-only</goal> </goals> <phase>package</phase> <configuration> 
+				<path>/</path> <enableNaming>true</enableNaming> <finalName>webapp.jar</finalName> 
+				<charset>utf-8</charset> </configuration> </execution> </executions> </plugin> -->
 		</plugins>
 	</build>
 
 	<properties>
-    	<maven.tomcat.port>8088</maven.tomcat.port>
+		<maven.tomcat.port>8088</maven.tomcat.port>
 		<openapi-generator.version>5.1.0</openapi-generator.version>
 		<spring.data.version>2.4.5</spring.data.version>
 		<jackson-databind.version>0.2.1</jackson-databind.version>

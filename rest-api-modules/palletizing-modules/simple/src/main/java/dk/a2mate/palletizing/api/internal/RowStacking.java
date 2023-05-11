@@ -10,7 +10,7 @@ import dk.a2mate.palletizing.api.model.PalletLayer;
 import dk.a2mate.palletizing.api.model.PalletizedPallet;
 
 /*
- * Block stacking is identical rows on all layers
+ * ROW stack rotate layer after each layer
  */
 public class RowStacking extends Stacking {
 
@@ -72,9 +72,6 @@ public class RowStacking extends Stacking {
 		return maxItemOnPalletLayer(false) < maxItemOnPalletLayer(true);
 	}
 
-	/*
-	 * ROW stack rotate layer after each layer
-	 */
 	public PalletLayer[] generateStacking() {
 		LOGGER.debug("generateStacking()", pallet.getId());
 

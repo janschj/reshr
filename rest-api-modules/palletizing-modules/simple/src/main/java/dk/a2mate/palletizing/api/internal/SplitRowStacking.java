@@ -10,8 +10,9 @@ import dk.a2mate.palletizing.api.model.PalletLayer;
 import dk.a2mate.palletizing.api.model.PalletizedPallet;
 
 /*
- * Block stacking is identical rows on all layers
+ * SPLITROW stack rotate layer after each layer. On each layer first row is rotaded opposite rest
  */
+
 public class SplitRowStacking extends Stacking {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SplitRowStacking.class);
@@ -72,11 +73,10 @@ public class SplitRowStacking extends Stacking {
 		return maxItemOnPalletLayer(false) < maxItemOnPalletLayer(true);
 	}
 
-	/*
-	 * ROW stack rotate layer after each layer
-	 */
 	public PalletLayer[] generateStacking() {
 		LOGGER.debug("generateStacking()", pallet.getId());
+		boolean rotated = isRotatedBest();
+		LOGGER.debug("generateStacking() rotated {}", rotated);
 
 		PalletizedPallet pp = new PalletizedPallet();
 		pp.setNoOfItems(0);
@@ -87,7 +87,6 @@ public class SplitRowStacking extends Stacking {
 		
 		PalletLayer[] layers = new PalletLayer[maxItemsInHeight()];
 		for (int z = 0; z < maxItemsInHeight(); z++) {
-			boolean rotated = (z % 2) == 1 ? true : false;
 			PalletLayer layer = new PalletLayer();
 			layer.setzCoordinate(pallet.getHeight() + (z * item.getHeight()));
 			layer.setLayeredItems(getLayeredItems(rotated));

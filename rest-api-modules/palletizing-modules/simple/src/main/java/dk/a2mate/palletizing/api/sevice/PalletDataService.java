@@ -1,13 +1,24 @@
 package dk.a2mate.palletizing.api.sevice;
 
-import java.util.Set;
+import java.util.List;
 
 import dk.a2mate.palletizing.api.model.Pallet;
 
 public interface PalletDataService {
-	
-	Set<Pallet> findAll();
-	Pallet findById(String id);
-	void createPallet(Pallet pallet);
+
+	// find operation
+	Pallet findById(String palletId);
+
+	// Save operation
+	Pallet savePallet(Pallet Pallet);
+
+	// Read operation
+	List<Pallet> fetchPalletList();
+
+	// Update operation
+	Pallet updatePallet(Pallet pallet, String palletId);
+
+	// Delete operation
+	void deletePalletById(String palletId);
 
 }

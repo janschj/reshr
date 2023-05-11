@@ -26,7 +26,7 @@ public class ItemsApiDelegateImpl implements ItemsApiDelegate {
 	@Override
 	public ResponseEntity<Void> createItem(Item item) {
 		LOGGER.info("createItem id {}", item.getId());
-		itemDataService.createItem(item);
+		itemDataService.saveItem(item);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -40,9 +40,9 @@ public class ItemsApiDelegateImpl implements ItemsApiDelegate {
 
 	@Override
 	public ResponseEntity<List<Item>> listItems(Integer limit) {
-		LOGGER.info("listItems {}", limit);
-		List<Item> items = new ArrayList<>();
-		items.addAll(itemDataService.findAll());
+		LOGGER.info("listItems ");
+		List<Item> items = itemDataService.fetchItemList();
+		LOGGER.info("listItems {}", items.size());
 		return new ResponseEntity<>(items, HttpStatus.OK);
 	}
 

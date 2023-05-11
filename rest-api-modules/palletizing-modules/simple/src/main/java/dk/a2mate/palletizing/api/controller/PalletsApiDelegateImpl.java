@@ -25,7 +25,7 @@ public class PalletsApiDelegateImpl implements PalletsApiDelegate {
 	@Override
 	public ResponseEntity<Void> createPallet(Pallet pallet) {
 		LOGGER.info("createPallet id {}", pallet.getId());
-		palletDataService.createPallet(pallet);
+		palletDataService.savePallet(pallet);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -34,7 +34,7 @@ public class PalletsApiDelegateImpl implements PalletsApiDelegate {
 	public ResponseEntity<List<Pallet>> listPallets(Integer limit) {
 		LOGGER.info("listPallets {}", limit);
 		List<Pallet> pallets = new ArrayList<>();
-		pallets.addAll(palletDataService.findAll());
+		pallets.addAll(palletDataService.fetchPalletList());
 		return new ResponseEntity<>(pallets, HttpStatus.OK);
 	}
 
