@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.baeldung</groupId>
+    <groupId>dk.reshr</groupId>
     <artifactId>rest-api-modules</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>rest-api-modules</name>
@@ -192,13 +192,14 @@
                         <configuration>
                             <property>tutorialsproject.basedir</property>
                             <project>
-                                <groupId>com.baeldung</groupId>
+                                <groupId>dk.reshr</groupId>
                                 <artifactId>rest-api-modules</artifactId>
                             </project>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+         <!-- 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
@@ -221,6 +222,7 @@
                     </execution>
                 </executions>
             </plugin>
+          -->
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${maven-war-plugin.version}</version>
@@ -327,7 +329,7 @@
 
             <modules>
                  <module>spring-boot-modules</module>
-                 <module>palletizing-modules</module>
+                 <module>domain-modules</module>
             </modules>
 
             <properties>
