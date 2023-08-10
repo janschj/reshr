@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import dk.reshr.resource.api.ResourcesApiDelegate;
 import dk.reshr.resource.api.model.Resource;
+import dk.reshr.resource.api.repository.ResourceId;
 import dk.reshr.resource.api.sevice.ResourceDataService;
 
 
@@ -24,7 +25,7 @@ public class ResourcesApiDelegateImpl implements ResourcesApiDelegate {
     private ResourceDataService ResourceDataService;
 
 	@Override
-	public ResponseEntity<Void> createResource(Resource Resource) {
+	public ResponseEntity<Void> createResource(Integer accountId, Resource Resource) {
 		LOGGER.info("createResource id {}", Resource.getId());
 		ResourceDataService.saveResource(Resource);
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -32,17 +33,18 @@ public class ResourcesApiDelegateImpl implements ResourcesApiDelegate {
 
 
 	@Override
-	public ResponseEntity<List<Resource>> listResources(Integer limit) {
-		LOGGER.info("listResources {}", limit);
+	public ResponseEntity<List<Resource>> listResourcesByAccountId(Integer accountId) {
+		LOGGER.info("listResources {}", accountId);
 		List<Resource>Resources = new ArrayList<>();
-		Resources.addAll(ResourceDataService.fetchResourceList());
+		Resources.addAll(ResourceDataService.fetchResourceListByAccountId(accountId));
 		return new ResponseEntity<>(Resources, HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<Resource> showResourcesById(Integer ResourceId) {
-		LOGGER.info("showResourceById {}", ResourceId);
-		Resource Resource = ResourceDataService.findById(ResourceId);
+	public ResponseEntity<Resource> showResourcesById(Integer accountId, Integer resourceId) {
+		LOGGER.info("showResourceById {}", accountId);
+		ResourceId r = new ResourceId(accountId, resourceId);
+		Resource Resource = ResourceDataService.findById(r);
 		return new ResponseEntity<>(Resource, HttpStatus.OK);
 	}
 

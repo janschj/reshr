@@ -1,7 +1,7 @@
 create table Resource(
-  ACCOUNTID int,
+  ACCOUNT_ID int,
   ID int,
   NAME varchar(100) not null,
-    PRIMARY KEY ( ACCOUNTID, ID )
+    PRIMARY KEY ( ACCOUNT_ID, ID )
 );
 

@@ -1,10 +1,9 @@
 package dk.reshr.resource.api.repository;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,11 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@IdClass(ResourceId.class)
 public class ResourceDao {
 
 	@Id
+	private Integer accountId;
+	@Id
 	private Integer id;
-	private String email;
+	
+	private String name;
 		
 	
 	public Integer getId() {
@@ -29,11 +32,17 @@ public class ResourceDao {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getEmail() {
-		return email;
+	public String getName() {
+		return name;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getAccountId() {
+		return accountId;
+	}
+	public void setAccountId(Integer accountId) {
+		this.accountId = accountId;
 	}
 
 }

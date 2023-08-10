@@ -7,20 +7,19 @@ info:
 servers:
   - url: http://localhost:8088/
 paths:
-  /resources:
+  /accounts/{accountId}/resources:
     get:
       summary: List all Resources
-      operationId: listResources
+      operationId: listResourcesByAccountId
       tags:
         - resources         
       parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 100)
-          required: false
+        - name: accountId
+          in:  path
+          required: true
+          description: The id of the account to retrieve
           schema:
             type: integer
-            format: int32
       responses:
         '200':
           description: A paged array of Resources
@@ -44,6 +43,13 @@ paths:
       operationId: createResource
       tags:
         - resources
+      parameters:
+        - name: accountId
+          in:  path
+          required: true
+          description: The id of the account to retrieve
+          schema:
+            type: integer
       requestBody:
         $ref: '#/components/requestBodies/ResourceBody'
       responses:
@@ -55,17 +61,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /resources/{resourceId}:
+  /accounts/{accountId}/resources/{resourceId}:
     get:
       summary: Info for a specific account
       operationId: showResourcesById
       tags:
         - resources
       parameters:
-        - name: resourceId
+        - name: accountId
           in: path
           required: true
           description: The id of the account to retrieve
+          schema:
+            type: integer
+        - name: resourceId
+          in: path
+          required: true
+          description: The id of the resource to retrieve
           schema:
             type: integer
       responses:
@@ -86,9 +98,12 @@ components:
     Resource:
       type: object
       required:
+        - accountId
         - id
         - name
       properties:
+        accountId:
+          type: integer
         id:
           type: integer
         name:
